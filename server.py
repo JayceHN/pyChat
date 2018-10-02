@@ -38,5 +38,5 @@ class Server:
             connThread.daemon = True
             connThread.start()
             self.conns.append(nuConn) 
-            nuConn.send(('Welcome to %s server' % self.name).encode())
+            #nuConn.send(('Welcome to %s server' % self.name).encode())
             print('New connection : ', self.conns)
