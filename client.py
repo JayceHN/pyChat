@@ -2,13 +2,17 @@
 #       HOST(ip)    PORT(1-65535)
 import socket
 import threading
+import sys
 
 #ADDR = "localhost",8888
+HELP = """Usage: ./client.py serverAddr portToConnect""",
+
+
 
 class Client:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    def __init__(self,addr, port, pseudo):
+    
+    def __init__(self,addr, port): #pseudo
         self.sock.connect((addr,int(port)))
 
         cliThread = threading.Thread(target=self.sendMsg)
@@ -22,6 +26,7 @@ class Client:
                 break
 
             print('>',data)
+        self.sock.close()
 
     def sendMsg(self):
         while True:
@@ -34,3 +39,13 @@ class Client:
     #    data = sock.recv(1024)
     #bytes(or obj) to printable thing
     #print('Received:',repr(data))
+
+
+try: 
+    if(len(sys.argv) < 3):
+        print(HELP[0])
+    else:
+        client = Client(sys.argv[1], sys.argv[2])
+except KeyboardInterrupt: 
+    print('')
+    sys.exit(0)
